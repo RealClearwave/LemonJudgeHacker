@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 //#include <direct.h>
-#define max_tstnode 301 //×î¶à²âÊÔµã¸öÊı
-#define bfxlen 10 //ºó×º³¤¶È (\temp\_0.0)
+#define max_tstnode 301 //æœ€å¤šæµ‹è¯•ç‚¹ä¸ªæ•°
+#define bfxlen 10 //åç¼€é•¿åº¦ (\temp\_0.0)
 using namespace std;
 
 string Tmpath = "cd .. && cd .. && cd data && cd ";
-string ProblemName = "Prob1"; //ĞèÒªÆÀ²âµÄÌâÄ¿µÄÃû×Ö£¨Êı¾İÄ¿Â¼Ãû³Æ£©
+string ProblemName = "Prob1"; //éœ€è¦è¯„æµ‹çš„é¢˜ç›®çš„åå­—ï¼ˆæ•°æ®ç›®å½•åç§°ï¼‰
 string InputFile = "Prob1.in";
-string OutputFile = "Prob1.out"; //ÌâÄ¿¸ø¶¨µÄÊä³öÎÄ¼ş
-string wpt/*¹¤×÷Ä¿Â¼*/,dpt/*´ğ°¸Ä¿Â¼*/;
-string files[max_tstnode*2];int fnum = 0; //ÎÄ¼şÁĞ±í 
+string OutputFile = "Prob1.out"; //é¢˜ç›®ç»™å®šçš„è¾“å‡ºæ–‡ä»¶
+string wpt/*å·¥ä½œç›®å½•*/,dpt/*ç­”æ¡ˆç›®å½•*/;
+string files[max_tstnode*2];int fnum = 0; //æ–‡ä»¶åˆ—è¡¨ 
 
 bool subfix(string s,string p){
 	if (s.length() <= 3) return false;
