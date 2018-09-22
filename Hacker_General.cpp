@@ -1,20 +1,32 @@
 #include <bits/stdc++.h>
 //#include <direct.h>
 #define max_tstnode 301 //最多测试点个数
+#define max_ReadChar 10001 //最大读入字符数 
 #define bfxlen 10 //后缀长度 (\temp\_0.0)
 #define WIN true
 #define LNX false
 using namespace std;
-ofstream flg("../../data/gugu.log"); //Log Path
-
 string Tmpath = "cd .. && cd .. && cd data && cd ";
-bool UseStdio = true; //使用标准输入输出 
-string ProblemName = "prime"; //需要评测的题目的名字（数据目录名称）
-string InputFile = "prime.in";
-string OutputFile = "prime.out"; //题目给定的输出文件
+ofstream flg("../../data/gugu.log"); //Log Path
 string wpt/*工作目录*/,dpt/*答案目录*/;
 string files[max_tstnode*2];int fnum = 0; //文件列表 
 bool sysv = false;
+
+int MaxRD = max_ReadChar;
+int MaxTm = 1e8; //时间限制 
+
+bool UseStdio = true; //使用标准输入输出 
+bool LimitAC = false; //限制AC点个数以获得部分分 
+float ACRate = 0.5; //AC点比率 
+
+string ProblemName = "treasure"; //需要评测的题目的名字（数据目录名称）
+string InputFile = ProblemName + ".in";
+string OutputFile = ProblemName + ".out"; //题目给定的输出文件
+
+bool partJudge(int tot,int cur){
+	if (!LimitAC) return true;
+	else return (cur <= fnum * ACRate);
+}
 
 void decrun(bool version,string wr,string lr){
 	string cmdc;
@@ -74,10 +86,11 @@ string getIn(string fn) {
 	string t,ret;
 	ifstream fin(fn.c_str());
 	//cout<<fn.c_str()<<endl;
-	while (getline(fin,t)) {
+	while (ret.length() <= MaxRD && getline(fin,t)) {
 		ret += t;
 	}
-
+	
+	if (ret.length() > MaxRD) ret = ret.substr(0,MaxRD);
 	return ret;
 
 }
@@ -85,20 +98,22 @@ string getIn(string fn) {
 string getStdIn(){
 	string tmp,ret;
 	if (UseStdio){
-		while(getline(cin,tmp))
+		while(ret.length() <= MaxRD && getline(cin,tmp))
 			ret += tmp;
 		
+		if (ret.length() > MaxRD) ret = ret.substr(0,MaxRD);
 		return ret;
 	}
 	ifstream fin(InputFile.c_str());
 	
-	while (getline(fin,tmp)) ret += tmp;
-	return tmp;
+	while (ret.length() <= MaxRD && getline(fin,tmp)) ret += tmp;
+	if (ret.length() > MaxRD) ret = ret.substr(0,MaxRD);
+	return ret;
 }
 
 void Steal(string inp) {
 	for (int i=1;i<=fnum;i+=1)
-		if (subfix(files[i],".out") || subfix(files[i],".ans")){
+		if (subfix(files[i],".out") || subfix(files[i],".ans") && partJudge(fnum,i)){
 			flg<<dpt+files[i].substr(0,files[i].length() - 4) + ".in"<<endl;
 			string ith = getIn(dpt+files[i].substr(0,files[i].length() - 4) + ".in");
 			string fth = getIn(dpt + files[i]);
@@ -121,6 +136,7 @@ void Steal(string inp) {
 }
 
 int main() {
+	ios_base::sync_with_stdio(false);
 	sysv = sys_vers();
 //	string cmdc;
 //	if (sysv == LNX) cmdc = "rm -rf sysver.exp";
@@ -132,7 +148,7 @@ int main() {
 	//_getcwd(dr,1000);
 	//Get the Current Working Directory.
 	string dr;
-	system("pwd > pwdout.exp");
+	decrun(sysv,"echo %cd% > pwdout.exp","pwd > pwdout.exp");
 	ifstream fin("pwdout.exp");
 	getline(fin,dr);
 	fin.close();
@@ -146,6 +162,8 @@ int main() {
 	//system("cd.. && cd.. && cd data && cd Testp1 && type Data1.out >pp111.txt");
 	
 	gen_filetree();
+	MaxRD = MaxTm / fnum;
+	
 	Steal(getStdIn());
 	return 0;
 }
