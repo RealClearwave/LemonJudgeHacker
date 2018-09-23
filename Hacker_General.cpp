@@ -117,7 +117,7 @@ void Steal(string inp) {
 			flg<<dpt+files[i].substr(0,files[i].length() - 4) + ".in"<<endl;
 			string ith = getIn(dpt+files[i].substr(0,files[i].length() - 4) + ".in");
 			string fth = getIn(dpt + files[i]);
-			flg<<ith<<' '<<inp<<endl;
+			//flg<<ith<<' '<<inp<<endl;
 			if (inp == ith){
 				if (UseStdio){
 					cout<<fth<<endl;
