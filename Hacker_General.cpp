@@ -87,7 +87,7 @@ string getIn(string fn) {
 	ifstream fin(fn.c_str());
 	//cout<<fn.c_str()<<endl;
 	while (ret.length() <= MaxRD && getline(fin,t)) {
-		ret += t;
+		ret += t + '/n';
 	}
 	
 	if (ret.length() > MaxRD) ret = ret.substr(0,MaxRD);
@@ -99,14 +99,14 @@ string getStdIn(){
 	string tmp,ret;
 	if (UseStdio){
 		while(ret.length() <= MaxRD && getline(cin,tmp))
-			ret += tmp;
+			ret += tmp + '/n';
 		
 		if (ret.length() > MaxRD) ret = ret.substr(0,MaxRD);
 		return ret;
 	}
 	ifstream fin(InputFile.c_str());
 	
-	while (ret.length() <= MaxRD && getline(fin,tmp)) ret += tmp;
+	while (ret.length() <= MaxRD && getline(fin,tmp)) ret += tmp + '/n';
 	if (ret.length() > MaxRD) ret = ret.substr(0,MaxRD);
 	return ret;
 }
